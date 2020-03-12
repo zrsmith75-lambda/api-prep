@@ -35,6 +35,19 @@ router.get("/:id", (req, res) => {
 });
 
 // GET shows' characters ?/:id?
+router.get("/:id/characters", (req, res) => {
+  const { id } = req.params;
+  showsDB
+    .getShowsCharacters(id)
+    .then(characters => {
+      res.status(200).json(characters);
+    })
+    .catch(err => {
+      res.status(500).json({
+        errorMessage: `There was an error: ${err}`
+      });
+    });
+});
 
 // POST
 router.post("/", (req, res) => {
@@ -72,7 +85,7 @@ router.put("/:id", (req, res) => {
       res.status(200).json(updateShow);
     })
     .catch(err => {
-      res.status(500).json({ message: `Error of ${err}` });
+      res.status(500).json({ errorMessage: `Error of ${err}` });
     });
 });
 
